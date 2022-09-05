@@ -1,4 +1,5 @@
 import pybullet as p
+import os
 
 class Panda:
     def __init__(self, stepsize=1e-3, realtime=0):
@@ -23,7 +24,8 @@ class Panda:
         p.setGravity(0,0,-9.81)
 
         # load models
-        p.setAdditionalSearchPath("../models")
+        
+        p.setAdditionalSearchPath(os.path.join(os.path.dirname(__file__), '../models'))
 
         self.plane = p.loadURDF("plane/plane.urdf",
                                 useFixedBase=True)
