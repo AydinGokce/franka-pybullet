@@ -57,6 +57,7 @@ for i in range(int(duration/stepsize)):
 
                 target_pos = robot.solveInverseKinematics(endeffector_target_pos,[1,0,0,0])
                 robot.setTargetPositions(target_pos)
+                print(f"target pos: {endeffector_target_pos}\nend pos: {robot.getEndEffectorCoordinates()}")
             
         except Exception as e:
             print(f"Error occurred: {e} from message {pointer_pos}")

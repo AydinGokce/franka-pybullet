@@ -8,10 +8,7 @@ class Panda:
 
         self.control_mode = "torque" 
 
-        self.position_control_gain_p = [0.01,0.01,0.01,0.01,0.01,0.01,0.01]
-        self.position_control_gain_d = [1.0,1.0,1.0,1.0,1.0,1.0,1.0]
-        self.max_torque = [100,100,100,100,100,100,100]
-
+        
         # connect pybullet
         p.connect(p.GUI)
         p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
@@ -32,6 +29,11 @@ class Panda:
         self.robot = p.loadURDF("panda/panda_gripper.urdf",
                                 useFixedBase=True,
                                 flags=p.URDF_USE_SELF_COLLISION)
+        
+        self.position_control_gain_p = [0.01] * p.getNumJoints(self.robot)
+        self.position_control_gain_d = [1.0] * p.getNumJoints(self.robot)
+        self.max_torque = [100] * p.getNumJoints(self.robot)
+
         
         # robot parameters
         self.dof = p.getNumJoints(self.robot)
@@ -85,7 +87,12 @@ class Panda:
             raise Exception('wrong control mode')
 
     def setTargetPositions(self, target_pos):
-        self.target_pos = target_pos
+        self.target_pos = tuple(list(target_pos) + [0])
+        
+        print(
+            f"\ntarget_pos len: {len(self.target_pos)}\njoint_indices_len: {len(self.joints)}\nmax_torque_len: {len(self.max_torque)}\n"
+        )
+        
         p.setJointMotorControlArray(bodyUniqueId=self.robot,
                                     jointIndices=self.joints,
                                     controlMode=p.POSITION_CONTROL,
@@ -106,6 +113,10 @@ class Panda:
         joint_pos = [x[0] for x in joint_states]
         joint_vel = [x[1] for x in joint_states]
         return joint_pos, joint_vel 
+
+    def solveInverseKinematics(self, target_pos, target_ori):
+        joint_pos = p.calculateInverseKinematics(self.robot, 7, target_pos, target_ori)
+        return joint_pos
 
 if __name__ == "__main__":
     robot = Panda(realtime=1)

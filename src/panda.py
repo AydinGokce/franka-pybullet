@@ -84,9 +84,11 @@ class Panda:
             self.control_mode = "torque"
         else:
             raise Exception('wrong control mode')
-
     def setTargetPositions(self, target_pos):
         self.target_pos = target_pos
+        print(
+            f"\ntarget_pos len: {len(self.target_pos)}\njoint_indices_len: {len(self.joints)}\nmax_torque_len: {len(self.max_torque)}\n"
+        )
         p.setJointMotorControlArray(bodyUniqueId=self.robot,
                                     jointIndices=self.joints,
                                     controlMode=p.POSITION_CONTROL,
@@ -113,6 +115,9 @@ class Panda:
 
     def solveInverseKinematics(self, pos, ori):
         return list(p.calculateInverseKinematics(self.robot, 7, pos, ori))
+    
+    def getEndEffectorCoordinates(self):
+        return p.getLinkState(self.robot, 7)[0]
 
 
 if __name__ == "__main__":
