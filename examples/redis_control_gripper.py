@@ -28,6 +28,7 @@ saferange_min_y = 1.0
 saferange_max_x = -0.5
 saferange_min_x = 0.5
 
+
 for i in range(int(duration/stepsize)):
     if i%1000 == 0:
         print("Simulation time: {:.3f}".format(robot.t))
@@ -53,12 +54,15 @@ for i in range(int(duration/stepsize)):
                 ratio_x = (pos_x - xmin) / (xmax - xmin)
                 ratio_y = (pos_y - ymin) / (ymax - ymin)
 
-                endeffector_target_pos = [ratio_y * (saferange_max_y - saferange_min_y) + saferange_min_y, ratio_x * (saferange_max_x - saferange_min_x) + saferange_min_x, 0.1]
+                endeffector_target_pos = [ratio_y * (saferange_max_y - saferange_min_y) + saferange_min_y, ratio_x * (saferange_max_x - saferange_min_x) + saferange_min_x, 0.2]
 
                 target_pos = robot.solveInverseKinematics(endeffector_target_pos,[1,0,0,0])
                 robot.setTargetPositions(target_pos)
             
         except Exception as e:
+            
+            if not isinstance(e, TypeError):
+                raise e
             print(f"Error occurred: {e} from message {pointer_pos}")
             continue
 

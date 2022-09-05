@@ -9,7 +9,7 @@ import numpy as np
 from math import sin
             #print(f"pointer positions: {pos_x}, {pos_y}")
 
-from panda_ball import Panda
+from panda import Panda
 
 
 duration = 1000
@@ -37,7 +37,7 @@ for i in range(int(duration/stepsize)):
     if isinstance(pointer_pos, dict):
         
         try:
-            data = msgpack.unpackb(pointer_pos['data'])
+            data = msgpack.unpackb(pointer_pos['data'], raw=True)
             print(f"data: {data}")
             command = data[b'command'].decode('utf-8')
             if command == "reset":
