@@ -2,7 +2,7 @@ import pybullet as p
 import os
 
 class Panda:
-    def __init__(self, stepsize=1e-3, realtime=0):
+    def __init__(self, stepsize=1e-3, realtime=0, render = False):
         self.t = 0.0
         self.stepsize = stepsize
         self.realtime = realtime
@@ -14,9 +14,13 @@ class Panda:
         self.max_torque = [100,100,100,100,100,100,100]
 
         # connect pybullet
-        p.connect(p.GUI)
-        p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
-        p.resetDebugVisualizerCamera(cameraDistance=1.5, cameraYaw=30, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.5])
+        if render:
+            p.connect(p.GUI)
+            p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+            p.resetDebugVisualizerCamera(cameraDistance=1.5, cameraYaw=30, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.5])
+        else:
+            p.connect(p.DIRECT)
+            
 
         p.resetSimulation()
         p.setTimeStep(self.stepsize)
