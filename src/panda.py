@@ -24,8 +24,7 @@ class Panda:
         p.setGravity(0,0,-9.81)
 
         # load models
-        
-        
+        p.setAdditionalSearchPath(os.path.join(os.path.dirname(__file__), "../models"))
 
         self.plane = p.loadURDF("plane/plane.urdf",
                                 useFixedBase=True)
