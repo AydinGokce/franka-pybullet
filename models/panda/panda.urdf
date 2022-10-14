@@ -18,7 +18,8 @@
     <inertial>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <mass value="2.8142028896"/>
-        <inertia ixx="0.0129886979" ixy="0.0" ixz="0.0" iyy="0.0165355284" iyz="0" izz="0.0203311636"/>    </inertial>
+      <inertia ixx="0.0129886979" ixy="0.0" ixz="0.0" iyy="0.0165355284" iyz="0" izz="0.0203311636"/>    
+      </inertial>
   </link>
   
   <link name="panda_link1">

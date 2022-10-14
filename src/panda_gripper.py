@@ -17,7 +17,6 @@ class Panda:
         p.resetSimulation()
         p.setTimeStep(self.stepsize)
         p.setRealTimeSimulation(self.realtime)
-        p.setGravity(0,0,-9.81)
 
         # load models
         p.setAdditionalSearchPath("../models")
